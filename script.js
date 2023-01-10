@@ -60,15 +60,30 @@ operatorButtons.forEach(operatorButton => {
             previousNum = toFloat(currentNumArray);
             currentOperator = operatorButton.textContent;
             currentNumArray.length = 0;
-            formerDisplay.textContent = previousNum += currentOperator;
+            formerDisplay.textContent = previousNum += " " + currentOperator;
             currentDisplay.textContent = "";
             fixFloat();
+            return;
+        }
+        else if (formerDisplay != "" && currentDisplay != "") {
+            let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
+            previousNum = solvedNum;
+            currentNumArray.length = 0;
+            formerDisplay.textContent = "";
+            currentDisplay.textContent = "";
+            formerDisplay.textContent += previousNum;
+            previousOperator = currentOperator;
+            currentOperator = operatorButton.textContent;
+            formerDisplay.textContent += " " + currentOperator;
+            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
+            // currentNumArray.push(previousNum.toString().split(''));
         }
     });
 });
 
+//Equal Button functionality
 equalsButton.addEventListener('click', () => {
-    let solvedNum = operate(toFloat(currentNumArray), previousNum, currentOperator);
+    let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
     previousNum = solvedNum;
     currentNumArray.length = 0;
     formerDisplay.textContent = "";
@@ -78,8 +93,7 @@ equalsButton.addEventListener('click', () => {
 })
 
 
-
-//Other
+//Operator Function
 function operate(numA, numB, operator) {
     switch (currentOperator) {
         case ("%"):
@@ -99,3 +113,5 @@ function operate(numA, numB, operator) {
             break;
     }
 }
+
+let x = -12.334;
