@@ -41,10 +41,8 @@ decimalButton.addEventListener('click', () => {
 
 //Turns the input array into a float
 let toFloat = (numArray) => parseFloat((numArray.join("")));
-// function toFloat(numArray) {
-//     return parseFloat((numArray.join("")));
-// }
 
+//Fix previousNum value because clicking operator buttons makes it strange
 function fixFloat() {
     previousNum = parseFloat(previousNum.replace(/[%x÷+-]/g, ""));
 }
@@ -52,7 +50,7 @@ function fixFloat() {
 //Operator buttons functionality
 operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
-        if (currentDisplay.textContent === "" ) {
+        if (currentDisplay.textContent === "") {
             previousOperator = currentOperator;
             currentOperator = operatorButton.textContent;
             formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
@@ -69,9 +67,35 @@ operatorButtons.forEach(operatorButton => {
     });
 });
 
+equalsButton.addEventListener('click', () => {
+    let solvedNum = operate(toFloat(currentNumArray), previousNum, currentOperator);
+    previousNum = solvedNum;
+    currentNumArray.length = 0;
+    formerDisplay.textContent = "";
+    currentDisplay.textContent = "";
+    currentDisplay.textContent += previousNum;
+    currentNumArray.push(previousNum.toString().split(''));
+})
+
 
 
 //Other
 function operate(numA, numB, operator) {
-    return operator(numA, numB);
+    switch (currentOperator) {
+        case ("%"):
+            return numA % numB;
+            break;
+        case ("÷"):
+            return numA / numB;
+            break;
+        case ("x"):
+            return numA * numB;
+            break;
+        case ("-"):
+            return numA - numB;
+            break;
+        case ("+"):
+            return numA + numB;
+            break;
+    }
 }
