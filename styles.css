@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#calculator-body {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 600px;
+    background-color: grey;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#calculator-screen {
+    width: 325px;
+    height: 125px;
+    background-color: white;
+    align-self: center;
+}
+
+.calculator-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 325px;
+    height: 400px;
+    align-self: center;
+}
+
+button {
+    width: 1fr; 
+}
+
+#equals-button {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
