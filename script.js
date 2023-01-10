@@ -45,14 +45,28 @@ let toFloat = (numArray) => parseFloat((numArray.join("")));
 //Fix previousNum value because clicking operator buttons makes it strange
 function fixFloat() {
     previousNum = parseFloat(previousNum.replace(/[%x÷+-]/g, ""));
-}
+};
+
+//Mutal functions for operator and equals buttons
+function multipleOperators(operatorButton) {
+    previousOperator = currentOperator;
+    currentOperator = operatorButton.textContent;
+};
+
+function solveAndReset(){
+    let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
+    currentNumArray.length = 0;
+    previousNum = solvedNum;
+    currentDisplay.textContent = "";
+    formerDisplay.textContent = "";
+    formerDisplay.textContent += previousNum;
+};
 
 //Operator buttons functionality
 operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
         if (currentDisplay.textContent === "") {
-            previousOperator = currentOperator;
-            currentOperator = operatorButton.textContent;
+            multipleOperators(operatorButton);
             formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
             return;
         }
@@ -66,29 +80,21 @@ operatorButtons.forEach(operatorButton => {
             return;
         }
         else if (formerDisplay != "" && currentDisplay != "") {
-            let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
-            previousNum = solvedNum;
-            currentNumArray.length = 0;
-            formerDisplay.textContent = "";
-            currentDisplay.textContent = "";
-            formerDisplay.textContent += previousNum;
-            previousOperator = currentOperator;
-            currentOperator = operatorButton.textContent;
+            //Same 2
+            solveAndReset()
+            //Same 2
+            multipleOperators(operatorButton);
             formerDisplay.textContent += " " + currentOperator;
             formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
-            // currentNumArray.push(previousNum.toString().split(''));
         }
     });
 });
 
 //Equal Button functionality
 equalsButton.addEventListener('click', () => {
-    let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
-    previousNum = solvedNum;
-    currentNumArray.length = 0;
-    formerDisplay.textContent = "";
-    currentDisplay.textContent = "";
-    currentDisplay.textContent += previousNum;
+    //Same 2
+    solveAndReset()
+    //Same 2
     currentNumArray.push(previousNum.toString().split(''));
 })
 
@@ -113,5 +119,3 @@ function operate(numA, numB, operator) {
             break;
     }
 }
-
-let x = -12.334;
