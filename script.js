@@ -1,4 +1,4 @@
-let currentNum = [];
+let currentNumArray = [];
 let previousNum = [];
 
 //Initalising variables for calculator buttons and screen displays
@@ -21,12 +21,13 @@ numberButtons.forEach(numberButton => {
             return;
         }
         currentDisplay.textContent += numberButton.textContent;
-        currentNum.push(numberButton.textContent);
+        currentNumArray.push(numberButton.textContent);
     })
 })
 
-
-
+function toFloat(numArray) {
+    return parseFloat((numArray.join("")));
+}
 
 function operate(numA, numB, operator) {
     return operator(numA, numB);
