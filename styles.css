@@ -18,6 +18,10 @@ body {
     width: 325px;
     height: 125px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    align-items: flex-end;
 }
 
 .calculator-buttons {
@@ -34,4 +38,19 @@ button {
 #equals-button {
     grid-column-start: 3;
     grid-column-end: 5;
+}
+#former-input,
+#current-input {
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+#former-input {
+    flex: 1;
+    font-size: 25px;
+}
+
+#current-input {
+    flex: 2;
+    font-size: 50px;
 }
