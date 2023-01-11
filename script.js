@@ -2,7 +2,6 @@ let currentNumArray = [];
 let previousNum;
 let currentOperator;
 let previousOperator;
-const operators = ["%", "÷", "x", "-", "+"];
 
 //Initalising variables for calculator buttons and screen displays
 const acButton = document.querySelector('#ac-button');
@@ -59,7 +58,7 @@ function solveAndReset(){
     previousNum = solvedNum;
     currentDisplay.textContent = "";
     formerDisplay.textContent = "";
-    formerDisplay.textContent += previousNum;
+    formerDisplay.textContent = previousNum;
 };
 
 //Operator buttons functionality
@@ -67,7 +66,8 @@ operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
         if (currentDisplay.textContent === "") {
             multipleOperators(operatorButton);
-            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
+            formerDisplay.textContent += " " + currentOperator;
+            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
             return;
         }
         else if (formerDisplay.textContent === "") {
@@ -80,28 +80,24 @@ operatorButtons.forEach(operatorButton => {
             return;
         }
         else if (formerDisplay != "" && currentDisplay != "") {
-            //Same 2
             solveAndReset()
-            //Same 2
             multipleOperators(operatorButton);
             formerDisplay.textContent += " " + currentOperator;
-            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, currentOperator);
+            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
+            return;
         }
     });
 });
 
 //Equal Button functionality
 equalsButton.addEventListener('click', () => {
-    //Same 2
     solveAndReset()
-    //Same 2
-    currentNumArray.push(previousNum.toString().split(''));
-})
+});
 
 
-//Operator Function
+//Operator Function which matches the current operator and returns the solution using that operator
 function operate(numA, numB, operator) {
-    switch (currentOperator) {
+    switch (operator) {
         case ("%"):
             return numA % numB;
             break;
@@ -117,5 +113,12 @@ function operate(numA, numB, operator) {
         case ("+"):
             return numA + numB;
             break;
-    }
-}
+    };
+};
+
+//All Clear button Function
+acButton.addEventListener('click', () => {
+    currentNumArray.length = previousNum = 0;
+    currentOperator = previousOperator = "";
+    formerDisplay.textContent = currentDisplay.textContent = "";
+});
