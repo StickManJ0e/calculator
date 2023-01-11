@@ -1,7 +1,10 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #edede9;
+    font-family: "Sofia Sans";
 }
 
 #calculator-body {
@@ -12,16 +15,19 @@ body {
     background-color: grey;
     justify-content: space-evenly;
     align-items: center;
+    border-radius: 10px;
+    margin: 5vh;
 }
 
 #calculator-screen {
     width: 325px;
     height: 125px;
-    background-color: white;
+    background-color: #edede9;
     display: flex;
     flex-direction: column;
     padding: 5px;
     align-items: flex-end;
+    border-radius: 10px;
 }
 
 .calculator-buttons {
@@ -33,12 +39,39 @@ body {
 
 button {
     width: 1fr; 
+    border-radius: 10px;
 }
+
+.number,
+#decimal-button {
+    background-color: #edede9;
+}
+
+#ac-button:hover,
+#c-button:hover {
+    background-color: #e9c46a;
+}
+
+.operator:hover {
+    background-color: #2a9d8f;
+}
+
+.number:hover,
+#decimal-button:hover{
+    filter: brightness(110%);
+}
+
 
 #equals-button {
     grid-column-start: 3;
     grid-column-end: 5;
+    background-color: #e9c46a;
 }
+
+#equals-button:hover {
+    filter: brightness(110%);
+}
+
 #former-input,
 #current-input {
     box-sizing: border-box;
@@ -53,4 +86,13 @@ button {
 #current-input {
     flex: 2;
     font-size: 50px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:link:hover {
+    color: #778da9;
 }
