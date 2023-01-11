@@ -94,7 +94,7 @@ operatorButtons.forEach(operatorButton => {
 //Equal Button functionality
 equalsButton.addEventListener('click', () => {
     solveAndReset()
-    multipleOperators(operatorButton);
+    // multipleOperators(operatorButton);
 });
 
 
