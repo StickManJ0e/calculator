@@ -54,6 +54,10 @@ function multipleOperators(operatorButton) {
 
 function solveAndReset(){
     let solvedNum = operate(previousNum, toFloat(currentNumArray), currentOperator);
+    if (solvedNum === "Why tf r u diving by 0?") {
+        formerDisplay.textContent = "Why tf r u diving by 0?";
+        return;
+    }
     currentNumArray.length = 0;
     previousNum = solvedNum;
     currentDisplay.textContent = "";
@@ -66,15 +70,15 @@ operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
         if (currentDisplay.textContent === "") {
             multipleOperators(operatorButton);
-            formerDisplay.textContent += " " + currentOperator;
             formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
+            formerDisplay.textContent += ` ${currentOperator}`;
             return;
         }
         else if (formerDisplay.textContent === "") {
             previousNum = toFloat(currentNumArray);
             currentOperator = operatorButton.textContent;
             currentNumArray.length = 0;
-            formerDisplay.textContent = previousNum += " " + currentOperator;
+            formerDisplay.textContent = previousNum += ` ${currentOperator}`;
             currentDisplay.textContent = "";
             fixFloat();
             return;
@@ -82,8 +86,8 @@ operatorButtons.forEach(operatorButton => {
         else if (formerDisplay != "" && currentDisplay != "") {
             solveAndReset()
             multipleOperators(operatorButton);
-            formerDisplay.textContent += " " + currentOperator;
             formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
+            formerDisplay.textContent += ` ${currentOperator}`;
             return;
         }
     });
@@ -92,11 +96,21 @@ operatorButtons.forEach(operatorButton => {
 //Equal Button functionality
 equalsButton.addEventListener('click', () => {
     solveAndReset()
+    multipleOperators(operatorButton);
+    formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
+    formerDisplay.textContent += ` ${currentOperator}`;
 });
 
 
 //Operator Function which matches the current operator and returns the solution using that operator
 function operate(numA, numB, operator) {
+    if (numB === 0 && operator === "÷") {
+        currentNumArray.length = 0;
+        previousNum = 0;
+        currentDisplay.textContent = "";
+        return "Why tf r u diving by 0?";
+    };
+
     switch (operator) {
         case ("%"):
             return numA % numB;
