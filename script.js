@@ -43,13 +43,15 @@ let toFloat = (numArray) => parseFloat((numArray.join("")));
 
 //Fix previousNum value because clicking operator buttons makes it strange
 function fixFloat() {
-    previousNum = parseFloat(previousNum.replace(/[%x÷+-]/g, ""));
+    previousNum = parseFloat(previousNum.replace(/[%x÷+–]/g, ""));
 };
 
 //Mutal functions for operator and equals buttons
 function multipleOperators(operatorButton) {
     previousOperator = currentOperator;
     currentOperator = operatorButton.textContent;
+    formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
+    formerDisplay.textContent += ` ${currentOperator}`;
 };
 
 function solveAndReset(){
@@ -70,8 +72,6 @@ operatorButtons.forEach(operatorButton => {
     operatorButton.addEventListener('click', () => {
         if (currentDisplay.textContent === "") {
             multipleOperators(operatorButton);
-            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
-            formerDisplay.textContent += ` ${currentOperator}`;
             return;
         }
         else if (formerDisplay.textContent === "") {
@@ -86,8 +86,6 @@ operatorButtons.forEach(operatorButton => {
         else if (formerDisplay != "" && currentDisplay != "") {
             solveAndReset()
             multipleOperators(operatorButton);
-            formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
-            formerDisplay.textContent += ` ${currentOperator}`;
             return;
         }
     });
@@ -97,8 +95,6 @@ operatorButtons.forEach(operatorButton => {
 equalsButton.addEventListener('click', () => {
     solveAndReset()
     multipleOperators(operatorButton);
-    formerDisplay.textContent = formerDisplay.textContent.replace(previousOperator, "");
-    formerDisplay.textContent += ` ${currentOperator}`;
 });
 
 
@@ -121,7 +117,7 @@ function operate(numA, numB, operator) {
         case ("x"):
             return numA * numB;
             break;
-        case ("-"):
+        case ("–"):
             return numA - numB;
             break;
         case ("+"):
