@@ -132,3 +132,9 @@ acButton.addEventListener('click', () => {
     currentOperator = previousOperator = "";
     formerDisplay.textContent = currentDisplay.textContent = "";
 });
+
+//Clear button function
+cButton.addEventListener('click', () => {
+    currentNumArray.pop();
+    currentDisplay.textContent = currentDisplay.textContent.slice(0, -1);
+})
